@@ -1,0 +1,116 @@
+B1;95;0c#!/bin/bash
+
+################################
+# How much do I own Jie Dai ?  #
+################################
+
+title=(How much do I own JIE DAI ?)
+
+q1=(HEY! How much was your meal ?)
+q2=(How much was the box and other extra fee ?)
+q3=(How much was the discount ?)
+q4=(How many people ate with you ? "Yourself included")
+
+a1=(Now you should pay me)
+
+show_words_one_by_one() {
+    words=$@
+
+    for word in $words
+    do
+	echo -n $word" "  # no new line
+	sleep 0.2
+    done
+
+    echo
+}
+
+calculate_amount() {
+    meal=$1
+    box=$2
+    discount=$3
+    people=$4
+
+    result=`echo "scale=2;$meal + ($box - $discount) / $people" | bc`
+}
+
+quit_option() {
+    while true; do
+	read -p "Leaving? [Q] to quit, [R] to restart. " qr
+	case $qr in
+	    [Rr]* )
+		main
+		break;;
+	    [Qq]* )
+		echo "Jie: Bye-bye"
+		exit;;
+	    * ) 
+		echo "Neither a \"Q\" or \"R\"."
+		clear
+	esac
+    done
+}
+
+payment_option() {
+    while true; do
+	read -p "Me: [Yes] I'll pay you. [No] Who are you? " yn
+	case $yn in
+	    [Yy]es* )
+		echo
+		echo "Jie: Hei Hei"
+		break;;
+            [Nn]o* )
+		echo
+		echo "Jie: So sad... : ("
+		break;;
+            *)
+		echo
+		echo "Jie: Only \"yes\" or \"no\" are allowed, answer again!";;
+	esac
+    done
+}
+
+main() {
+    
+    clear  # clear screen
+
+    echo 
+    show_words_one_by_one ${title[@]}
+    echo 
+
+    echo -n "Jie: "
+    show_words_one_by_one ${q1[@]}
+    echo -n "Me: ￥"
+    read meal_cost
+    echo
+
+    echo -n "Jie: "
+    show_words_one_by_one ${q2[@]}
+    echo -n "Me: ￥"
+    read box_cost
+    echo
+
+    echo -n "Jie: "
+    show_words_one_by_one ${q3[@]}
+    echo -n "Me: -￥"
+    read discount
+    echo
+
+    echo -n "Jie: "
+    show_words_one_by_one ${q4[@]}
+    echo -n "Me: "
+    read people
+    echo
+
+    clear
+    echo -n "Jie: "
+    calculate_amount $meal_cost $box_cost $discount $people
+    show_words_one_by_one ${a1[@]} ￥$result
+
+    payment_option
+    
+    quit_option
+}
+
+# Run the script
+main
