@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ################################
-# How much do I own Jie Dai ?  #
+# How much do I owe Jie Dai ?  #
 ################################
 
-title=(How much do I own JIE DAI ?)
+title=(How much do I owe JIE DAI ?)
 
 q1=(HEY! How much was your meal ?)
 q2=(How much was the box and other extra fee ?)
@@ -101,7 +101,7 @@ payment_option() {
 	case $yn in
 	    [Yy]es* )
 		echo
-		echo "Jie: Hei Hei"
+		echo "Jie: Hei Hei! Scan my QR code to pay me via WeChat."
 		show_qr_code
 		break;;
             [Nn]o* )
