@@ -1,3 +1,6 @@
+// no need to have a Main class
+// multiple class in one file
+
 fun main(arg: Array<String>) {
 
     // no new
